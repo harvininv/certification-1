@@ -9,9 +9,13 @@ from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 import ssl
 import smtplib
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key_here'
+app.secret_key = os.getenv('FLASK_SECRET_KEY', 'your_secret_key_here')
 
 UPLOAD_FOLDER = 'uploads'
 TEMPLATES_FOLDER = 'templates'
@@ -19,8 +23,8 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(TEMPLATES_FOLDER, exist_ok=True)
 
 # Email configuration
-sender_email = 'info@harvinntechnologies.co.in'
-sender_password = 'qysc gvcu ptmx nrwm'
+sender_email = os.getenv('SENDER_EMAIL')
+sender_password = os.getenv('SENDER_PASSWORD')
 
 # Required columns - simplified to just Name and Email
 required_columns = ['Name', 'Email']
