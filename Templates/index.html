@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f7f9fc;
+        }
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #4a5568;
+        }
+        .file-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+        }
+        .btn {
+            background-color: #4299e1;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #3182ce;
+        }
+        .btn-secondary {
+            background-color: #38a169;
+            margin-top: 20px;
+        }
+        .btn-secondary:hover {
+            background-color: #2f855a;
+        }
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+        .flash-message {
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .flash-message.success {
+            background-color: #c6f6d5;
+            color: #2f855a;
+        }
+        .flash-message.error {
+            background-color: #fed7d7;
+            color: #c53030;
+        }
+        .instructions {
+            background-color: #ebf8ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4299e1;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #2b6cb0;
+        }
+        .instructions ul {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Training Certificate Generator</h1>
+
+        <div class="flash-messages">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if "success" in message.lower() %}
+                            <div class="flash-message success">{{ message }}</div>
+                        {% else %}
+                            <div class="flash-message error">{{ message }}</div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <div class="instructions">
+            <h3>Instructions</h3>
+            <ul>
+                <li>Upload an Excel file (.xlsx) containing student data</li>
+                <li>The Excel file must include the following columns: <strong>Name</strong>, <strong>Email</strong></li>
+                <li>After uploading, certificates will be generated automatically</li>
+                <li>Click "Send Certificates via Email" to email the certificates to students</li>
+            </ul>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">Select Excel File</label>
+                <input type="file" name="file" id="file" class="file-input" accept=".xlsx">
+            </div>
+            <button type="submit" class="btn">Upload File & Generate Certificates</button>
+        </form>
+
+        <form action="{{ url_for('send_emails') }}" method="POST">
+            <button type="submit" class="btn btn-secondary">Send Certificates via Email</button>
+        </form>
+    </div>
+</body>
+</html>
