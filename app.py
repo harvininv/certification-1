@@ -18,7 +18,7 @@ app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'your_secret_key_here')
 
 UPLOAD_FOLDER = 'uploads'
-TEMPLATES_FOLDER = 'templates'
+TEMPLATES_FOLDER = 'Templates'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(TEMPLATES_FOLDER, exist_ok=True)
 
